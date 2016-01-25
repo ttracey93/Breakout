@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="25" height="20" tilewidth="32" tileheight="32" nextobjectid="23">
+ <tileset firstgid="1" source="floor-tileset.tsx"/>
+ <layer name="Ground" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJwTZmBgEKYiFsGCQeLUAqN2jNoxaseoHcPBDlqXu6N45GEAi7cUhw==
+  </data>
+ </layer>
+ <objectgroup name="Walls">
+  <object id="3" x="0" y="0" width="640" height="32"/>
+  <object id="4" x="0" y="448" width="640" height="32"/>
+  <object id="5" x="0" y="32" width="32" height="416"/>
+  <object id="6" x="608" y="32" width="32" height="416"/>
+ </objectgroup>
+ <objectgroup name="Bricks">
+  <object id="7" x="93" y="78"/>
+  <object id="8" x="216" y="72"/>
+  <object id="9" x="322" y="72"/>
+  <object id="10" x="430" y="76"/>
+  <object id="11" x="530" y="76"/>
+  <object id="12" x="90" y="142"/>
+  <object id="13" x="213" y="140"/>
+  <object id="14" x="337" y="141"/>
+  <object id="15" x="437" y="144"/>
+  <object id="16" x="535" y="137"/>
+  <object id="17" x="95" y="207"/>
+  <object id="18" x="223" y="212"/>
+  <object id="19" x="342" y="210"/>
+  <object id="20" x="432" y="207"/>
+  <object id="21" x="544" y="209"/>
+ </objectgroup>
+ <objectgroup name="Spawns">
+  <object id="22" x="320" y="416">
+   <properties>
+    <property name="type" value="PADDLE"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

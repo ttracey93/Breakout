@@ -3,11 +3,13 @@ package com.mygdx.breakout.factories;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.breakout.collision.ICollisionBits;
 import com.mygdx.breakout.collision.IMaskBits;
 import com.mygdx.breakout.components.BodyComponent;
 import com.mygdx.breakout.components.TextureComponent;
+import com.mygdx.breakout.managers.Assets;
 import com.mygdx.breakout.util.IConversions;
 
 import java.util.Random;
@@ -198,6 +200,130 @@ public class BodyFactory {
         bodyComponent.fixtureDef = fixtureDef;
         bodyComponent.fixture = fixture;
         bodyComponent.body.setLinearVelocity(0, 5);
+        bodyComponent.rootPosition = bodyComponent.body.getPosition().cpy();
+
+        return bodyComponent;
+    }
+
+    public static BodyComponent platform(PooledEngine engine, World world, TextureComponent tc, RectangleMapObject spawn) {
+        BodyComponent bodyComponent = engine.createComponent(BodyComponent.class);
+
+        // Initialize body component
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        spawn.getRectangle().getCenter(bodyDef.position);
+        bodyDef.position.y += 15; // 15 pixels away breakout paddle
+        bodyDef.position.scl(IConversions.PPM);
+
+        // Create a body in the world using our definition
+        Body body = world.createBody(bodyDef);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(
+                tc.region.getRegionWidth() * IConversions.PPM / 2, // hx
+                tc.region.getRegionHeight() * IConversions.PPM / 2  // hy
+        );
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 0f;
+        fixtureDef.restitution = 0f;
+        fixtureDef.friction = 0f;
+        fixtureDef.filter.categoryBits = ICollisionBits.PLATFORM;
+        fixtureDef.filter.maskBits = IMaskBits.PLATFORM;
+
+        Fixture fixture = body.createFixture(fixtureDef);
+
+        shape.dispose();
+
+        bodyComponent.bodyDef = bodyDef;
+        bodyComponent.body = body;
+        bodyComponent.shape = shape;
+        bodyComponent.fixtureDef = fixtureDef;
+        bodyComponent.fixture = fixture;
+        bodyComponent.rootPosition = bodyComponent.body.getPosition().cpy();
+
+        return bodyComponent;
+    }
+
+    public static BodyComponent player(PooledEngine engine, World world, TextureComponent tc, RectangleMapObject spawn) {
+        BodyComponent bodyComponent = engine.createComponent(BodyComponent.class);
+
+        // Initialize body component
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        spawn.getRectangle().getCenter(bodyDef.position);
+        bodyDef.position.scl(IConversions.PPM);
+
+        // Create a body in the world using our definition
+        Body body = world.createBody(bodyDef);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(
+                tc.region.getRegionWidth() * IConversions.PPM / 2, // hx
+                tc.region.getRegionHeight() * IConversions.PPM / 2  // hy
+        );
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 0f;
+        fixtureDef.restitution = 0f;
+        fixtureDef.friction = 0f;
+        fixtureDef.filter.categoryBits = ICollisionBits.PLAYER;
+        fixtureDef.filter.maskBits = IMaskBits.PLAYER;
+
+        Fixture fixture = body.createFixture(fixtureDef);
+
+        shape.dispose();
+
+        bodyComponent.bodyDef = bodyDef;
+        bodyComponent.body = body;
+        bodyComponent.shape = shape;
+        bodyComponent.fixtureDef = fixtureDef;
+        bodyComponent.fixture = fixture;
+        bodyComponent.rootPosition = bodyComponent.body.getPosition().cpy();
+        bodyComponent.moveSpeed.set(5, 5);
+
+        return bodyComponent;
+    }
+
+    public static BodyComponent door(PooledEngine engine, World world, TextureComponent tc, RectangleMapObject spawn) {
+        BodyComponent bodyComponent = engine.createComponent(BodyComponent.class);
+
+        // Initialize body component
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        spawn.getRectangle().getCenter(bodyDef.position);
+        bodyDef.position.scl(IConversions.PPM);
+
+        // Create a body in the world using our definition
+        Body body = world.createBody(bodyDef);
+
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(
+                tc.region.getRegionWidth() * IConversions.PPM / 2, // hx
+                tc.region.getRegionHeight() * IConversions.PPM / 2  // hy
+        );
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 0f;
+        fixtureDef.restitution = 0f;
+        fixtureDef.friction = 0f;
+        fixtureDef.filter.categoryBits = ICollisionBits.DOOR;
+        fixtureDef.filter.maskBits = IMaskBits.DOOR;
+        fixtureDef.isSensor = true;
+
+        Fixture fixture = body.createFixture(fixtureDef);
+
+        shape.dispose();
+
+        bodyComponent.bodyDef = bodyDef;
+        bodyComponent.body = body;
+        bodyComponent.shape = shape;
+        bodyComponent.fixtureDef = fixtureDef;
+        bodyComponent.fixture = fixture;
         bodyComponent.rootPosition = bodyComponent.body.getPosition().cpy();
 
         return bodyComponent;

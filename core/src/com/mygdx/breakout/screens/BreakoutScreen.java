@@ -20,6 +20,7 @@ import com.mygdx.breakout.systems.CameraSystem;
 import com.mygdx.breakout.systems.ControllerSystem;
 import com.mygdx.breakout.systems.RenderingSystem;
 import com.mygdx.breakout.util.IMapPath;
+import com.mygdx.breakout.world.BreakoutLevel;
 import com.mygdx.breakout.world.GameState;
 
 /**
@@ -64,7 +65,7 @@ public class BreakoutScreen extends GameScreen {
     protected void update(float delta) {
         super.update(delta);
 
-        if(level.getBricks() <= 0) {
+        if(((BreakoutLevel)level).getBricks() <= 0) {
             state = GameState.WON;
             Utils.state = state;
         }

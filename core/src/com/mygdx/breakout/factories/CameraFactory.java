@@ -20,6 +20,9 @@ public class CameraFactory {
 
         CameraComponent camera = new CameraComponent();
         camera.camera = engine.getSystem(RenderingSystem.class).getCamera();
+
+        System.out.println(transform.position);
+
         camera.camera.position.set(transform.position.x, transform.position.y, 0);
 
         camera.target = target;

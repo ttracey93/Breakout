@@ -36,9 +36,6 @@ public class RenderingSystem extends IteratingSystem {
     private ComponentMapper<TransformComponent> tm;
     private ComponentMapper<TextureComponent> texM;
 
-    private float alpha = 0f;
-    private float fadeModifier = 1f;
-
     public RenderingSystem(SpriteBatch batch, RayHandler rayHandler) {
         super(Family.all(TransformComponent.class, TextureComponent.class).get());
 
@@ -68,17 +65,6 @@ public class RenderingSystem extends IteratingSystem {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        if(Utils.state == GameState.WON) {
-            alpha -= deltaTime * fadeModifier;
-
-            if(alpha <= 0) {
-                alpha = 1f;
-            }
-        }
 
         renderQueue.sort(comparator);
 

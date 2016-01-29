@@ -9,4 +9,5 @@ import com.badlogic.gdx.math.Vector2;
 public class ControllerComponent implements Component {
     public final Vector2 leftAxis = new Vector2();
     public final Vector2 rightAxis = new Vector2();
+    public boolean action = false;
 }

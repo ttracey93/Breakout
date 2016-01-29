@@ -44,7 +44,8 @@ public class MainMenu extends ScreenAdapter {
             guiCamera.unproject(mousePosition.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
             if(playBounds.contains(mousePosition.x, mousePosition.y)) {
-                game.setScreen(new BreakoutScreen(game));
+                //game.setScreen(new BreakoutScreen(game));
+                game.setScreen(new PlatformerScreen(game));
                 this.dispose();
             }
         }

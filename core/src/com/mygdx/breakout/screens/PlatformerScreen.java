@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.breakout.Breakout;
 import com.mygdx.breakout.collision.BreakoutListener;
 import com.mygdx.breakout.collision.PlatformerListener;
+import com.mygdx.breakout.components.PlatformComponent;
 import com.mygdx.breakout.factories.LevelFactory;
 import com.mygdx.breakout.managers.Destroyables;
 import com.mygdx.breakout.managers.Fonts;
@@ -19,7 +20,6 @@ import com.mygdx.breakout.managers.Triggers;
 import com.mygdx.breakout.managers.Utils;
 import com.mygdx.breakout.systems.*;
 import com.mygdx.breakout.util.IMapPath;
-import com.mygdx.breakout.world.BreakoutLevel;
 import com.mygdx.breakout.world.GameState;
 
 /**
@@ -27,6 +27,10 @@ import com.mygdx.breakout.world.GameState;
  */
 public class PlatformerScreen extends GameScreen {
     public PlatformerScreen(Breakout game) {
+        this(game, IMapPath.pTest.replace("maps/", ""));
+    }
+
+    public PlatformerScreen(Breakout game, String levelName) {
         this.game = game;
         state = GameState.PLAYING;
         Utils.state = state;
@@ -50,8 +54,9 @@ public class PlatformerScreen extends GameScreen {
         engine.addSystem(new ControllerSystem());
         engine.addSystem(new RenderingSystem(game.batch, rayHandler));
         engine.addSystem(new PlatformSystem());
+        engine.addSystem(new JumpSystem());
 
-        level = LevelFactory.breakout(this, IMapPath.test, engine, world, rayHandler);
+        level = LevelFactory.platformer(game, "maps/" + levelName, engine, world, rayHandler);
         Utils.setLevel(level);
 
         engine.getSystem(RenderingSystem.class).setLevel(level);
@@ -66,22 +71,10 @@ public class PlatformerScreen extends GameScreen {
         if(state == GameState.PLAYING) {
             world.step(delta, 6, 2);
         }
-        else if(state == GameState.WON) {
-            game.batch.begin();
-
-            Fonts.debug.draw(game.batch, "won!", 50, 100);
-
-            game.batch.end();
-        }
 
         engine.update(delta);
         Triggers.update();
         Destroyables.update();
-
-        if(level.getBricks() <= 0) {
-            state = GameState.WON;
-            Utils.state = state;
-        }
     }
 
     @Override

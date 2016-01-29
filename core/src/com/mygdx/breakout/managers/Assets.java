@@ -11,12 +11,18 @@ public class Assets {
     public static TextureRegion paddle;
     public static TextureRegion ball;
 
+    public static TextureRegion platform;
+    public static TextureRegion door;
+
     public static Texture playButton;
 
     public static void load() {
         brick = new TextureRegion(new Texture("game/brick.png"));
         paddle = new TextureRegion(new Texture("game/paddle.png"));
         ball = new TextureRegion(new Texture("game/ball.png"));
+
+        platform = new TextureRegion(new Texture("game/platform.png"));
+        door = new TextureRegion(new Texture("game/door.png"));
 
         playButton = new Texture("UI/menus/play.png");
     }

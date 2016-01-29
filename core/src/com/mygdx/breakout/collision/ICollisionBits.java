@@ -12,4 +12,6 @@ public interface ICollisionBits {
     short GROUND = CEILING << 1;
     short ENEMY = GROUND << 1;
     short PLATFORM = ENEMY << 1;
+    short PLAYER = PLATFORM << 1;
+    short DOOR = PLAYER << 1;
 }

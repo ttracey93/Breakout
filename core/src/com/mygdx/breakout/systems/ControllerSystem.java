@@ -57,7 +57,9 @@ public class ControllerSystem extends IteratingSystem {
             controller.rightAxis.x += 1;
         }
 
+        controller.action = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+
         // set linear velocity
-        body.body.setLinearVelocity(controller.leftAxis.x * body.moveSpeed.x, controller.leftAxis.y * body.moveSpeed.y);
+        body.body.setLinearVelocity(controller.leftAxis.x * body.moveSpeed.x, body.body.getLinearVelocity().y);
     }
 }

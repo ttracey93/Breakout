@@ -6,4 +6,5 @@ package com.mygdx.breakout.util;
 public interface IMapPath {
     String test = "maps/test.tmx";
     String large = "maps/large.tmx";
+    String pTest = "maps/platformer.tmx";
 }

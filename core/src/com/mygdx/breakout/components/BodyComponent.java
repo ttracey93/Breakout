@@ -16,4 +16,5 @@ public class BodyComponent implements Component {
     public Vector2 rootPosition;
 
     public final Vector2 moveSpeed = new Vector2();
+    public boolean onGround = false;
 }

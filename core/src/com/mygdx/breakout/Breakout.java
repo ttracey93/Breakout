@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.breakout.managers.*;
 import com.mygdx.breakout.screens.MainMenu;
+import com.mygdx.breakout.screens.PlatformerScreen;
 
 public class Breakout extends Game {
 	public SpriteBatch batch;
@@ -28,6 +29,9 @@ public class Breakout extends Game {
 
 	@Override
 	public void render () {
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 		// calls current screens render method
 		super.render();
 	}

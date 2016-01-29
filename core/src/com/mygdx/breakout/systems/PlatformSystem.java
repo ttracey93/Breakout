@@ -15,6 +15,6 @@ public class PlatformSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        System.out.println("Processing platform entity");
+
     }
 }

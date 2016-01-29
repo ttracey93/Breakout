@@ -14,6 +14,7 @@ import com.mygdx.breakout.managers.Triggers;
 import com.mygdx.breakout.systems.RenderingSystem;
 import com.mygdx.breakout.world.BreakoutLevel;
 import com.mygdx.breakout.world.GameState;
+import com.mygdx.breakout.world.Level;
 
 /**
  * Created by Dubforce on 1/25/2016.
@@ -31,7 +32,7 @@ public abstract class GameScreen extends ScreenAdapter {
     // Box2D objects
     protected World world;
     protected RayHandler rayHandler;
-    protected BreakoutLevel level;
+    protected Level level;
 
     // Local state
     protected GameState state;
@@ -62,7 +63,7 @@ public abstract class GameScreen extends ScreenAdapter {
         rayHandler.removeAll();
 
         // generate new level
-        level = LevelFactory.breakout(this, "maps/" + levelName, engine, world, rayHandler);
+        level = LevelFactory.platformer(game, "maps/" + levelName, engine, world, rayHandler);
 
         // set level in rendering system
         engine.getSystem(RenderingSystem.class).setLevel(level);

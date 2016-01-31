@@ -23,6 +23,8 @@ public class BodySystem extends IteratingSystem {
 
         tm = ComponentMapper.getFor(TransformComponent.class);
         bm = ComponentMapper.getFor(BodyComponent.class);
+
+        priority = 0;
     }
 
     @Override
@@ -36,16 +38,11 @@ public class BodySystem extends IteratingSystem {
         Bodies.add(body.body, entity);
 
         if(!body.body.isActive()) {
-            System.out.println("Body is not active");
             getEngine().removeEntity(entity);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.R)) {
-            System.out.println("R is pressed...");
-
             if(body.rootPosition != null) {
-                System.out.println("Root Pos != null");
-
                 body.body.setTransform(body.rootPosition, 0f);
             }
         }

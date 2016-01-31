@@ -7,4 +7,6 @@ import com.badlogic.ashley.core.Component;
  */
 public class HealthComponent implements Component {
     public int health = 100;
+    public float timeImmune;
+    public float timeSinceLastHit;
 }

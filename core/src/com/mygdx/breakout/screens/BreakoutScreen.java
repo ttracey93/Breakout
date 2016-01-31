@@ -28,14 +28,7 @@ import com.mygdx.breakout.world.GameState;
  */
 public class BreakoutScreen extends GameScreen {
     public BreakoutScreen(Breakout game) {
-        this.game = game;
-        state = GameState.PLAYING;
-        Utils.state = state;
-
-        guiCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        guiCam.position.set(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0);
-
-        engine = new PooledEngine();
+        super(game);
 
         world = new World(new Vector2(0, 0), true);
         world.setContactListener(new BreakoutListener());
@@ -55,11 +48,6 @@ public class BreakoutScreen extends GameScreen {
         Utils.setLevel(level);
 
         engine.getSystem(RenderingSystem.class).setLevel(level);
-    }
-
-    @Override
-    public void render(float delta) {
-        update(delta);
     }
 
     protected void update(float delta) {

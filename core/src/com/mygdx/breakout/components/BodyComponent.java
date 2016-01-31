@@ -17,4 +17,5 @@ public class BodyComponent implements Component {
 
     public final Vector2 moveSpeed = new Vector2();
     public boolean onGround = false;
+    public boolean canDoubleJump = false;
 }

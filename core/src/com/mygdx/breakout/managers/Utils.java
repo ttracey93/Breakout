@@ -1,6 +1,7 @@
 package com.mygdx.breakout.managers;
 
 import com.badlogic.ashley.core.Entity;
+import com.mygdx.breakout.Breakout;
 import com.mygdx.breakout.world.GameState;
 import com.mygdx.breakout.world.Level;
 
@@ -8,9 +9,18 @@ import com.mygdx.breakout.world.Level;
  * Created by Dubforce on 1/24/2016.
  */
 public class Utils {
+    public static Breakout game;
     public static Level level;
     public static GameState state;
     public static Entity player;
+
+    public static Breakout getGame() {
+        return game;
+    }
+
+    public static void setGame(Breakout game) {
+        Utils.game = game;
+    }
 
     public static Level getLevel() {
         return level;

@@ -15,6 +15,7 @@ public class Sounds {
     public static void load() {
         // sound asset loading
         bulletSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bullet.wav"));
+        mainTheme = Gdx.audio.newMusic(Gdx.files.internal("music/ransom.wav"));
     }
 
     public static void playSound(Sound sound) {
@@ -27,6 +28,12 @@ public class Sounds {
         if(Settings.soundEnabled) {
             sound.play(volume);
         }
+    }
+
+    public static void loop(Music music) {
+        music.setLooping(true);
+        music.setVolume(0f);
+        music.play();
     }
 
     public static void dispose() {

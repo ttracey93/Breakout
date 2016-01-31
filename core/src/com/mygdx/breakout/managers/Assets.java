@@ -14,6 +14,8 @@ public class Assets {
     public static TextureRegion platform;
     public static TextureRegion door;
 
+    public static TextureRegion enemy;
+
     public static Texture playButton;
 
     public static void load() {
@@ -23,6 +25,8 @@ public class Assets {
 
         platform = new TextureRegion(new Texture("game/platform.png"));
         door = new TextureRegion(new Texture("game/door.png"));
+
+        enemy = new TextureRegion(new Texture("game/enemy.png"));
 
         playButton = new Texture("UI/menus/play.png");
     }

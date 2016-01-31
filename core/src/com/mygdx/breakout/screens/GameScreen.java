@@ -2,6 +2,7 @@ package com.mygdx.breakout.screens;
 
 import box2dLight.RayHandler;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -11,6 +12,7 @@ import com.mygdx.breakout.Breakout;
 import com.mygdx.breakout.factories.LevelFactory;
 import com.mygdx.breakout.managers.Destroyables;
 import com.mygdx.breakout.managers.Triggers;
+import com.mygdx.breakout.managers.Utils;
 import com.mygdx.breakout.systems.RenderingSystem;
 import com.mygdx.breakout.world.BreakoutLevel;
 import com.mygdx.breakout.world.GameState;
@@ -37,6 +39,26 @@ public abstract class GameScreen extends ScreenAdapter {
     // Local state
     protected GameState state;
 
+    public GameScreen(Breakout game) {
+        this.game = game;
+        this.state = GameState.PLAYING;
+
+        Utils.setGame(game);
+        Utils.setState(this.state);
+
+        guiCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        guiCam.position.set(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0);
+
+        engine = new PooledEngine();
+    }
+
+
+    @Override
+    public void render(float delta) {
+        update(delta);
+        drawGUI();
+    }
+
     protected void update(float delta) {
         if(state == GameState.PLAYING) {
             world.step(delta, 6, 2);
@@ -45,6 +67,10 @@ public abstract class GameScreen extends ScreenAdapter {
         engine.update(delta);
         Triggers.update();
         Destroyables.update();
+    }
+
+    protected void drawGUI() {
+
     }
 
     public void setLevel(String levelName) {

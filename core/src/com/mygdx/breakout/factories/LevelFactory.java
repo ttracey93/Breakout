@@ -64,6 +64,8 @@ public class LevelFactory {
         MapObjects ceiling = getObjects(map, "Ceiling");
         MapObjects platforms = getObjects(map, "Platforms");
         MapObjects spawns = getObjects(map, "Spawns");
+        MapObjects enemies = getObjects(map, "Enemies");
+        MapObjects pickups = getObjects(map, "Pickups");
 
         for(MapObject wall : walls) {
             BodyFactory.wall(world, (RectangleMapObject)wall);
@@ -81,12 +83,14 @@ public class LevelFactory {
             PlatformFactory.normal(engine, world, (RectangleMapObject)platform);
         }
 
+        Entity player = null;
+
         for(MapObject spawn : spawns) {
             MapProperties props = spawn.getProperties();
             SpawnType st = SpawnType.valueOf(props.get("type").toString());
 
             if(st == SpawnType.PLAYER) {
-                BallFactory.player(engine, world, (RectangleMapObject)spawn);
+                player = BallFactory.player(engine, world, (RectangleMapObject)spawn);
             }
             else if(st == SpawnType.DOOR) {
                 System.out.println("Spawning door");
@@ -94,6 +98,12 @@ public class LevelFactory {
                 DoorFactory.door(game, engine, world, (RectangleMapObject)spawn, props.get("level").toString());
             }
         }
+
+        for(MapObject enemy : enemies) {
+            EnemyFactory.walking(engine, world, (RectangleMapObject) enemy, player);
+        }
+
+        for(MapObject pickup : pickups);
 
         return new PlatformerLevel(map, world);
     }

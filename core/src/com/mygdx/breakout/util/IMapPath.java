@@ -7,4 +7,5 @@ public interface IMapPath {
     String test = "maps/test.tmx";
     String large = "maps/large.tmx";
     String pTest = "maps/platformer.tmx";
+    String gameOver = "maps/gameOver.tmx";
 }

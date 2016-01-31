@@ -23,6 +23,8 @@ public class Breakout extends Game {
 		Triggers.load();
 		Destroyables.load();
 
+		Sounds.loop(Sounds.mainTheme);
+
 		// set the initial screen
 		setScreen(new MainMenu(this));
 	}

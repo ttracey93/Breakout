@@ -27,20 +27,13 @@ import com.mygdx.breakout.world.GameState;
  */
 public class PlatformerScreen extends GameScreen {
     public PlatformerScreen(Breakout game) {
-        this(game, IMapPath.pTest.replace("maps/", ""));
+        this(game, IMapPath.gameOver.replace("maps/", ""));
     }
 
     public PlatformerScreen(Breakout game, String levelName) {
-        this.game = game;
-        state = GameState.PLAYING;
-        Utils.state = state;
+        super(game);
 
-        guiCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        guiCam.position.set(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0);
-
-        engine = new PooledEngine();
-
-        world = new World(new Vector2(0, -9.8f), true);
+        world = new World(new Vector2(0, -25f), true);
         world.setContactListener(new PlatformerListener());
         Triggers.setWorld(world);
         Destroyables.setWorld(world);
@@ -55,6 +48,9 @@ public class PlatformerScreen extends GameScreen {
         engine.addSystem(new RenderingSystem(game.batch, rayHandler));
         engine.addSystem(new PlatformSystem());
         engine.addSystem(new JumpSystem());
+        engine.addSystem(new AISystem());
+        engine.addSystem(new HealthSystem(engine, world));
+        engine.addSystem(new MovementSystem());
 
         level = LevelFactory.platformer(game, "maps/" + levelName, engine, world, rayHandler);
         Utils.setLevel(level);
@@ -62,19 +58,17 @@ public class PlatformerScreen extends GameScreen {
         engine.getSystem(RenderingSystem.class).setLevel(level);
     }
 
-    @Override
-    public void render(float delta) {
-        update(delta);
+    protected void update(float delta) {
+        super.update(delta);
     }
 
-    protected void update(float delta) {
-        if(state == GameState.PLAYING) {
-            world.step(delta, 6, 2);
-        }
+    @Override
+    protected void drawGUI() {
+        game.batch.begin();
 
-        engine.update(delta);
-        Triggers.update();
-        Destroyables.update();
+        //game.batch.draw
+
+        game.batch.end();
     }
 
     @Override

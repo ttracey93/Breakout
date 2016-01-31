@@ -27,17 +27,15 @@ public class PlatformFactory {
         Entity platform = engine.createEntity();
 
         TransformComponent transform = engine.createComponent(TransformComponent.class);
-        TextureComponent texture = engine.createComponent(TextureComponent.class);
+        TextureComponent textureComponent = engine.createComponent(TextureComponent.class);
         PlatformComponent platformComponent = engine.createComponent(PlatformComponent.class);
 
-        texture.region = Assets.platform;
-
-        BodyComponent body = BodyFactory.platform(engine, world, texture, spawn);
+        BodyComponent body = BodyFactory.platform(engine, world, spawn);
 
         platformComponent.origin = body.body.getPosition().cpy().scl(IConversions.METERS_PER_PIXEL);
 
         platform.add(transform);
-        platform.add(texture);
+        platform.add(textureComponent);
         platform.add(body);
         platform.add(platformComponent);
 

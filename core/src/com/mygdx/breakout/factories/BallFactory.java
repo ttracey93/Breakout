@@ -41,19 +41,27 @@ public class BallFactory {
         TextureComponent textureComponent = engine.createComponent(TextureComponent.class);
         ControllerComponent controllerComponent = engine.createComponent(ControllerComponent.class);
         JumpComponent jumpComponent = engine.createComponent(JumpComponent.class);
+        PlayerComponent playerComponent = engine.createComponent(PlayerComponent.class);
+        HealthComponent healthComponent = engine.createComponent(HealthComponent.class);
 
         textureComponent.region = Assets.ball;
 
         // Keeping a reference to the light so it can be modified by powerups.
         BodyComponent bodyComponent = BodyFactory.player(engine, world, textureComponent, spawn);
         transform.position.set(bodyComponent.body.getPosition().x, bodyComponent.body.getPosition().y, 0);
-        jumpComponent.jumpForce = new Vector2(0, 250f);
+        jumpComponent.jumpForce = new Vector2(0, 7f);
+        jumpComponent.doubleJumpForce = new Vector2(0, 8f);
+
+        healthComponent.health = 5;
+        healthComponent.timeImmune = 3000f;
 
         ball.add(transform);
         ball.add(textureComponent);
         ball.add(bodyComponent);
         ball.add(controllerComponent);
         ball.add(jumpComponent);
+        ball.add(playerComponent);
+        ball.add(healthComponent);
 
         engine.addEntity(ball);
 

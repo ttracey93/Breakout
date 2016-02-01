@@ -13,8 +13,9 @@ public interface IMaskBits {
     short PLATFORM = ICollisionBits.BALL | ICollisionBits.WALL | ICollisionBits.ENEMY
             | ICollisionBits.GROUND | ICollisionBits.CEILING | ICollisionBits.PLAYER;
     short PLAYER = ICollisionBits.PLATFORM | ICollisionBits.GROUND | ICollisionBits.CEILING | ICollisionBits.WALL |
-            ICollisionBits.ENEMY | ICollisionBits.PADDLE | ICollisionBits.DOOR;
+            ICollisionBits.ENEMY | ICollisionBits.PADDLE | ICollisionBits.DOOR | ICollisionBits.PICKUP;
     short DOOR = ICollisionBits.PLAYER;
     short ENEMY = ICollisionBits.PADDLE | ICollisionBits.PLAYER | ICollisionBits.PLATFORM | ICollisionBits.GROUND |
             ICollisionBits.WALL | ICollisionBits.CEILING;
+    short PICKUP = ICollisionBits.PLAYER;
 }

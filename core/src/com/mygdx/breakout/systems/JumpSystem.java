@@ -27,13 +27,13 @@ public class JumpSystem extends IteratingSystem {
         BodyComponent bodyComponent = bm.get(entity);
         JumpComponent jumpComponent = jm.get(entity);
 
-        if(controllerComponent.action && bodyComponent.onGround) {
+        if(controllerComponent.action && jumpComponent.onGround) {
             //bodyComponent.body.applyForceToCenter(jumpComponent.jumpForce, false);
             bodyComponent.body.setLinearVelocity(bodyComponent.body.getLinearVelocity().x, jumpComponent.jumpForce.y);
         }
-        else if(controllerComponent.action && bodyComponent.canDoubleJump) {
+        else if(controllerComponent.action && jumpComponent.canDoubleJump) {
             bodyComponent.body.setLinearVelocity(bodyComponent.body.getLinearVelocity().x, jumpComponent.doubleJumpForce.y);
-            bodyComponent.canDoubleJump = false;
+            jumpComponent.canDoubleJump = false;
         }
     }
 }

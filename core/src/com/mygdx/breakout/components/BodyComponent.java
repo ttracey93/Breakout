@@ -14,8 +14,5 @@ public class BodyComponent implements Component {
     public FixtureDef fixtureDef = null;
     public Fixture fixture = null;
     public Vector2 rootPosition;
-
     public final Vector2 moveSpeed = new Vector2();
-    public boolean onGround = false;
-    public boolean canDoubleJump = false;
 }

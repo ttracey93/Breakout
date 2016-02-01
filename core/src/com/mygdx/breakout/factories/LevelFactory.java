@@ -80,7 +80,7 @@ public class LevelFactory {
         }
 
         for(MapObject platform : platforms) {
-            PlatformFactory.normal(engine, world, (RectangleMapObject)platform);
+            PlatformFactory.platform(engine, world, (RectangleMapObject)platform);
         }
 
         Entity player = null;
@@ -103,7 +103,9 @@ public class LevelFactory {
             EnemyFactory.walking(engine, world, (RectangleMapObject) enemy, player);
         }
 
-        for(MapObject pickup : pickups);
+        for(MapObject pickup : pickups) {
+            PickupFactory.pickup(engine, world, (RectangleMapObject)pickup);
+        }
 
         return new PlatformerLevel(map, world);
     }

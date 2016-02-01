@@ -5,7 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.breakout.components.BodyComponent;
 import com.mygdx.breakout.components.HealthComponent;
+import com.mygdx.breakout.components.JumpComponent;
 import com.mygdx.breakout.managers.Bodies;
+import com.mygdx.breakout.managers.Pickups;
 import com.mygdx.breakout.managers.Triggers;
 
 /**
@@ -14,10 +16,12 @@ import com.mygdx.breakout.managers.Triggers;
 public class PlatformerListener implements ContactListener {
     private ComponentMapper<BodyComponent> bm;
     private ComponentMapper<HealthComponent> hm;
+    private ComponentMapper<JumpComponent> jm;
 
     public PlatformerListener() {
         bm = ComponentMapper.getFor(BodyComponent.class);
         hm = ComponentMapper.getFor(HealthComponent.class);
+        jm = ComponentMapper.getFor(JumpComponent.class);
     }
 
     @Override
@@ -41,6 +45,9 @@ public class PlatformerListener implements ContactListener {
                 else if(af.categoryBits == ICollisionBits.ENEMY) {
                     playerCollidedWithEnemy(b, a, true, contact.getWorldManifold().getNormal());
                 }
+                else if(af.categoryBits == ICollisionBits.PICKUP) {
+                    playerCollidedWithPickup(b, a, true);
+                }
                 break;
             case ICollisionBits.ENEMY:
                 if(af.categoryBits == ICollisionBits.GROUND) {
@@ -52,6 +59,7 @@ public class PlatformerListener implements ContactListener {
                 else if(af.categoryBits == ICollisionBits.PLAYER) {
                     playerCollidedWithEnemy(a, b, true, contact.getWorldManifold().getNormal());
                 }
+                break;
             case ICollisionBits.GROUND:
                 if(af.categoryBits == ICollisionBits.PLAYER) {
                     playerCollidedWithGround(a, b, true, contact.getWorldManifold().getNormal());
@@ -60,6 +68,11 @@ public class PlatformerListener implements ContactListener {
             case ICollisionBits.DOOR:
                 if(af.categoryBits == ICollisionBits.PLAYER) {
                     Triggers.activate(b.getBody());
+                }
+                break;
+            case ICollisionBits.PICKUP:
+                if(af.categoryBits == ICollisionBits.PLAYER) {
+                    playerCollidedWithPickup(a, b, true);
                 }
             default:
                 break;
@@ -114,17 +127,17 @@ public class PlatformerListener implements ContactListener {
     // Utility methods
     private void playerCollidedWithGround(Fixture player, Fixture ground, boolean contactStarted, Vector2 normal) {
         if(Bodies.get(player.getBody()) != null) {
-            BodyComponent bc = bm.get(Bodies.get(player.getBody()));
+            JumpComponent jc = jm.get(Bodies.get(player.getBody()));
 
             if(normal.y == 1.0f) {
-                bc.onGround = true;
+                jc.onGround = true;
 
                 if(contactStarted) {
-                    bc.canDoubleJump = true;
+                    jc.canDoubleJump = true;
                 }
             }
             else {
-                bc.onGround = false;
+                jc.onGround = false;
             }
         }
     }
@@ -134,17 +147,15 @@ public class PlatformerListener implements ContactListener {
         BodyComponent ebc = bm.get(Bodies.get(enemy.getBody()));
         HealthComponent healthComponent = hm.get(Bodies.get(player.getBody()));
 
-        float vx = Math.signum(bc.body.getPosition().cpy().sub(ebc.body.getPosition().cpy()).x) * 1500f;
-
         if(contactStarted) {
             healthComponent.health -= 1;
-
-            System.out.println(healthComponent.health);
-
-            //bc.body.applyForceToCenter(new Vector2(vx, 100f), false);
-
-
             healthComponent.timeSinceLastHit = 0f;
+        }
+    }
+
+    private void playerCollidedWithPickup(Fixture player, Fixture pickup, boolean contactStarted) {
+        if(contactStarted) {
+            Pickups.activate(Bodies.get(pickup.getBody()), Bodies.get(player.getBody()));
         }
     }
 }

@@ -14,4 +14,5 @@ public interface ICollisionBits {
     short PLATFORM = ENEMY << 1;
     short PLAYER = PLATFORM << 1;
     short DOOR = PLAYER << 1;
+    short PICKUP = DOOR << 1;
 }

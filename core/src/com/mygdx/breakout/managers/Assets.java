@@ -13,6 +13,7 @@ public class Assets {
 
     public static TextureRegion platform;
     public static TextureRegion door;
+    public static TextureRegion jumpRefresher;
 
     public static TextureRegion enemy;
 
@@ -25,6 +26,7 @@ public class Assets {
 
         platform = new TextureRegion(new Texture("game/platform.png"));
         door = new TextureRegion(new Texture("game/door.png"));
+        jumpRefresher = new TextureRegion(new Texture("game/jumpRefresher.png"));
 
         enemy = new TextureRegion(new Texture("game/enemy.png"));
 

@@ -92,7 +92,7 @@ public class RenderingSystem extends IteratingSystem {
 
             batch.draw(
                     texture.region,
-                    transform.position.x - x, transform.position.y - y,
+                    transform.position.x, transform.position.y,
                     x, y,
                     width, height,
                     transform.scale.x, transform.scale.y,

@@ -9,4 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 public class JumpComponent implements Component {
     public Vector2 jumpForce;
     public Vector2 doubleJumpForce;
+
+    public boolean onGround = false;
+    public boolean canDoubleJump = false;
 }

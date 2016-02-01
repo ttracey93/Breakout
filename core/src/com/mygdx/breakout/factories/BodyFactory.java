@@ -247,23 +247,19 @@ public class BodyFactory {
         // Initialize body component
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        spawn.getRectangle().getCenter(bodyDef.position);
+        spawn.getRectangle().getPosition(bodyDef.position);
         bodyDef.position.scl(IConversions.PPM);
 
         // Create a body in the world using our definition
         Body body = world.createBody(bodyDef);
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(
-                tc.region.getRegionWidth() * IConversions.PPM / 2, // hx
-                tc.region.getRegionHeight() * IConversions.PPM / 2  // hy
-        );
+        PolygonShape shape = ShapeFactory.fromRectangle(spawn);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 0f;
         fixtureDef.restitution = 0f;
-        fixtureDef.friction = 0f;
+        fixtureDef.friction = 0.1f;
         fixtureDef.filter.categoryBits = ICollisionBits.PLAYER;
         fixtureDef.filter.maskBits = IMaskBits.PLAYER;
 
@@ -361,6 +357,43 @@ public class BodyFactory {
         bodyComponent.fixture = fixture;
         bodyComponent.rootPosition = bodyComponent.body.getPosition().cpy();
         bodyComponent.moveSpeed.set(3, 3);
+
+        return bodyComponent;
+    }
+
+    public static BodyComponent pickup(PooledEngine engine, World world, RectangleMapObject spawn) {
+        BodyComponent bodyComponent = engine.createComponent(BodyComponent.class);
+
+        // Initialize body component
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        spawn.getRectangle().getPosition(bodyDef.position);
+        bodyDef.position.scl(IConversions.PPM);
+
+        // Create a body in the world using our definition
+        Body body = world.createBody(bodyDef);
+
+        PolygonShape shape = ShapeFactory.fromRectangle(spawn);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 0f;
+        fixtureDef.restitution = 0f;
+        fixtureDef.friction = 0f;
+        fixtureDef.isSensor = true;
+        fixtureDef.filter.categoryBits = ICollisionBits.PICKUP;
+        fixtureDef.filter.maskBits = IMaskBits.PICKUP;
+
+        Fixture fixture = body.createFixture(fixtureDef);
+
+        shape.dispose();
+
+        bodyComponent.bodyDef = bodyDef;
+        bodyComponent.body = body;
+        bodyComponent.shape = shape;
+        bodyComponent.fixtureDef = fixtureDef;
+        bodyComponent.fixture = fixture;
+        bodyComponent.rootPosition = bodyComponent.body.getPosition().cpy();
 
         return bodyComponent;
     }
